@@ -1,25 +1,17 @@
-﻿name: Sync
+﻿name: Sync Fork
+
 on:
   schedule:
-    # once a day at 13:00 UTC to cleanup old runs
-    - cron: '0 13 * * *'
+    - cron: '* 3 * * 1'
   workflow_dispatch:
-    inputs:
-      reason:
-        description: 'Reason for triggering this workflow'
-        required: true
-        default: 'Manual'
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-  actions: write
+
 jobs:
   sync:
-    name: Fork Sync
-    uses: tgymnich/fork-sync@v2.0.10
-    with:
-      token: ${{ secrets.PERSONAL_TOKEN }}
-      owner: dotnet
-      base: main
-      head: main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tgymnich/fork-sync@v2.0
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          owner: dotnet
+          base: main
+          head: main
